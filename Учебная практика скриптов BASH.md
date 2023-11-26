@@ -1052,7 +1052,7 @@ done
 ```
 можно заменить на более простую запись через `seq`:
 ```bash
-for i in $(seq 1 4); do
+for i in $(seq 0 4); do
     ...
 done
 ```
