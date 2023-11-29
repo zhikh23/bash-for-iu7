@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>bash-for-iu7.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/*
+
+Atom One Dark by Daniel Gamage
+Original One Dark Syntax theme from https://github.com/atom/one-dark-syntax
+
+base:    #282c34
+mono-1:  #abb2bf
+mono-2:  #818896
+mono-3:  #5c6370
+hue-1:   #56b6c2
+hue-2:   #61aeee
+hue-3:   #c678dd
+hue-4:   #98c379
+hue-5:   #e06c75
+hue-5-2: #be5046
+hue-6:   #d19a66
+hue-6-2: #e6c07b
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  color: #abb2bf;
+  background: #282c34;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #5c6370;
+  font-style: italic;
+}
+
+.hljs-doctag,
+.hljs-keyword,
+.hljs-formula {
+  color: #c678dd;
+}
+
+.hljs-section,
+.hljs-name,
+.hljs-selector-tag,
+.hljs-deletion,
+.hljs-subst {
+  color: #e06c75;
+}
+
+.hljs-literal {
+  color: #56b6c2;
+}
+
+.hljs-string,
+.hljs-regexp,
+.hljs-addition,
+.hljs-attribute,
+.hljs-meta-string {
+  color: #98c379;
+}
+
+.hljs-built_in,
+.hljs-class .hljs-title {
+  color: #e6c07b;
+}
+
+.hljs-attr,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-type,
+.hljs-selector-class,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-number {
+  color: #d19a66;
+}
+
+.hljs-symbol,
+.hljs-bullet,
+.hljs-link,
+.hljs-meta,
+.hljs-selector-id,
+.hljs-title {
+  color: #61aeee;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-link {
+  text-decoration: underline;
+}
+
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+<link rel="stylesheet" href="file:///home/zhikh/repos/my/bash-for-iu7/styles/fix-fonts-size.css" type="text/css">
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="%D1%83%D1%87%D0%B5%D0%B1%D0%BD%D0%B0%D1%8F-%D0%BF%D1%80%D0%B0%D0%BA%D1%82%D0%B8%D0%BA%D0%B0-bash-%D0%B4%D0%BB%D1%8F-%D1%87%D0%B0%D0%B9%D0%BD%D0%B8%D0%BA%D0%BE%D0%B2">Учебная практика BASH для чайников</h1>
+<h2 id="%D0%BE%D0%B3%D0%BB%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5">Оглавление</h2>
+<ul>
+<li><a href="#%D1%83%D1%87%D0%B5%D0%B1%D0%BD%D0%B0%D1%8F-%D0%BF%D1%80%D0%B0%D0%BA%D1%82%D0%B8%D0%BA%D0%B0-bash-%D0%B4%D0%BB%D1%8F-%D1%87%D0%B0%D0%B9%D0%BD%D0%B8%D0%BA%D0%BE%D0%B2">Учебная практика BASH для чайников</a>
+<ul>
+<li><a href="#%D0%BE%D0%B3%D0%BB%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5">Оглавление</a></li>
+<li><a href="#%D0%BE%D1%82-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B0">От автора</a></li>
+<li><a href="#%D0%B3%D0%BB%D0%B0%D0%B2%D0%B0-i-%D0%B4%D0%B0-%D0%BA%D1%82%D0%BE-%D1%8D%D1%82%D0%BE%D1%82-%D0%B2%D0%B0%D1%88-bash">Глава I. Да кто этот ваш <code>.bash</code>?</a></li>
+<li><a href="#%D0%B3%D0%BB%D0%B0%D0%B2%D0%B0-ii-%D1%81%D1%82%D1%80%D0%BE%D0%BA%D0%B8--%D1%8D%D1%82%D0%BE-%D0%B2%D1%81%D1%91">Глава II. Строки — это всё</a>
+<ul>
+<li><a href="#21-%D0%BE%D0%B1%D1%8A%D1%8F%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF%D0%B5%D1%80%D0%B5%D0%BC%D0%B5%D0%BD%D0%BD%D1%8B%D1%85">2.1. Объявление переменных</a></li>
+<li><a href="#22-%D1%87%D1%82%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF%D0%B5%D1%80%D0%B5%D0%BC%D0%B5%D0%BD%D0%BD%D1%8B%D1%85-%D0%B8%D0%BB%D0%B8-%D0%BF%D0%BE%D1%87%D0%B5%D0%BC%D1%83-%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%81%D1%82%D0%B0%D0%BC-%D1%82%D0%B0%D0%BA-%D0%BC%D0%BD%D0%BE%D0%B3%D0%BE-%D0%BF%D0%BB%D0%B0%D1%82%D1%8F%D1%82">2.2. Чтение переменных или почему программистам так много платят</a></li>
+<li><a href="#23-%D1%87%D1%82%D0%BE-%D1%82%D0%B0%D0%BC-%D0%BF%D0%BE%D0%B4-%D0%BA%D0%B0%D0%BF%D0%BE%D1%82%D0%BE%D0%BC">2.3. Что там, под капотом?</a></li>
+<li><a href="#24-%D0%BD%D0%B5%D1%81%D0%BA%D0%BE%D0%BB%D1%8C%D0%BA%D0%BE-%D1%81%D0%BF%D0%BE%D1%81%D0%BE%D0%B1%D0%BE%D0%B2-%D0%B2%D0%B7%D0%B0%D0%B8%D0%BC%D0%BE%D0%B4%D0%B5%D0%B9%D1%81%D1%82%D0%B2%D0%B8%D1%8F-%D1%81%D0%BE-%D1%81%D1%82%D1%80%D0%BE%D0%BA%D0%B0%D0%BC%D0%B8">2.4. Несколько способов взаимодействия со строками</a>
+<ul>
+<li><a href="#241-%D0%B4%D0%BB%D0%B8%D0%BD%D0%B0-%D1%81%D1%82%D1%80%D0%BE%D0%BA%D0%B8">2.4.1. Длина строки</a></li>
+<li><a href="#242-%D0%BF%D1%80%D0%B8%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BA-%D0%BE%D0%BF%D1%80%D0%B5%D0%B4%D0%B5%D0%BB%D1%91%D0%BD%D0%BD%D0%BE%D0%BC%D1%83-%D1%80%D0%B5%D0%B3%D0%B8%D1%81%D1%82%D1%80%D1%83">2.4.2. Приведение к определённому регистру</a></li>
+</ul>
+</li>
+<li><a href="#25-%D0%B2%D0%B2%D0%BE%D0%B4-%D0%BF%D0%B5%D1%80%D0%B5%D0%BC%D0%B5%D0%BD%D0%BD%D1%8B%D1%85-%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D1%82%D0%B5%D0%BB%D0%B5%D0%BC">2.5. Ввод переменных пользователем</a></li>
+<li><a href="#26-%D0%BA%D0%B0%D0%B2%D1%8B%D1%87%D0%BA%D0%B8-%D0%BD%D0%B5-%D0%BD%D0%B5-%D1%81%D0%BB%D1%8B%D1%88%D0%B0%D0%BB%D0%B8">2.6. Кавычки? Не, не слышали</a></li>
+<li><a href="#27-%D0%B7%D0%B0%D0%B3%D0%B0%D0%B4%D0%BE%D1%87%D0%BD%D1%8B%D0%B9-%D0%B4%D0%BE%D0%BB%D0%BB%D0%B0%D1%80">2.7. Загадочный доллар</a></li>
+<li><a href="#28-%D0%BF%D0%BE%D0%B7%D0%B8%D1%86%D0%B8%D0%BE%D0%BD%D0%BD%D1%8B%D0%B5-%D0%BF%D0%B5%D1%80%D0%B5%D0%BC%D0%B5%D0%BD%D0%BD%D1%8B%D0%B5">2.8. Позиционные переменные</a></li>
+<li><a href="#29-%D0%B2%D0%BE%D0%BF%D1%80%D0%BE%D1%81%D1%8B-%D1%81%D1%83%D1%89%D0%B5%D1%81%D1%82%D0%B2%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F-%D1%81-%D1%82%D0%BE%D1%87%D0%BA%D0%B8-%D0%B7%D1%80%D0%B5%D0%BD%D0%B8%D1%8F-%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%81%D1%82%D0%B0">2.9. Вопросы существования с точки зрения программиста</a></li>
+</ul>
+</li>
+<li><a href="#%D0%B3%D0%BB%D0%B0%D0%B2%D0%B0-iii-%D0%B2%D0%B5%D1%82%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F-%D0%B2-bash-%D0%B5-%D0%B8%D0%BB%D0%B8-%D0%B0-%D1%87%D1%82%D0%BE-%D0%B5%D1%81%D0%BB%D0%B8">Глава III. Ветвления в bash-е или &quot;А что, если...&quot;</a>
+<ul>
+<li><a href="#31-%D1%81%D0%B8%D0%BD%D1%82%D0%B0%D0%BA%D1%81%D0%B8%D1%81">3.1. Синтаксис</a></li>
+<li><a href="#32-%D1%87%D0%B5%D0%BC-%D0%B1%D0%BE%D0%BB%D1%8C%D1%88%D0%B5---%D1%82%D0%B5%D0%BC-%D0%BB%D1%83%D1%87%D1%88%D0%B5">3.2. Чем больше - тем лучше</a></li>
+<li><a href="#32-%D1%81%D0%BE%D1%86%D0%B8%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D0%B5-%D0%B4%D0%B8%D1%81%D1%82%D0%B0%D0%BD%D1%86%D0%B8%D0%BE%D0%BD%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5">3.2. Социальное дистанционирование</a></li>
+<li><a href="#33-%D0%B2%D0%BE%D0%BF%D1%80%D0%BE%D1%81%D1%8B-%D0%B1%D1%8B%D1%82%D0%B8%D1%8F-%D1%87%D0%B0%D1%81%D1%82%D1%8C-ii">3.3. Вопросы бытия, часть II</a></li>
+<li><a href="#34-advanced-level-%D0%B2%D0%B5%D1%82%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B9">3.4. Advanced-level ветвлений</a>
+<ul>
+<li><a href="#%D0%BB%D0%BE%D0%B3%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5-%D0%BE%D0%BF%D0%B5%D1%80%D0%B0%D1%82%D0%BE%D1%80%D1%8B-%D0%B8-%D1%8D%D0%BA%D0%B2%D0%B8%D0%B2%D0%B0%D0%BB%D0%B5%D1%82%D0%BD%D0%BE%D1%81%D1%82%D1%8C">Логические операторы и эквивалетность:</a></li>
+<li><a href="#-%D0%B8-"><code>==</code> и <code>!=</code></a></li>
+</ul>
+</li>
+<li><a href="#35-%D0%B6%D0%B8%D0%B7%D0%BD%D0%B8-%D0%BF%D1%80%D0%BE%D0%B1%D0%B5%D0%BB%D0%BE%D0%B2-%D1%82%D0%BE%D0%B6%D0%B5-%D0%B2%D0%B0%D0%B6%D0%BD%D1%8B">3.5. Жизни пробелов тоже важны!</a></li>
+<li><a href="#36-%D1%82%D0%B0%D0%B8%D0%BD%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D1%8B%D0%B5-%D0%BC%D0%B8%D0%BD%D1%83%D1%81%D1%8B">3.6. Таинственные минусы</a></li>
+<li><a href="#37-">3.7. =~</a></li>
+<li><a href="#38-%D0%BA%D0%BE%D1%80%D0%BE%D1%82%D0%BA%D0%B0%D1%8F-%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D1%8C-%D1%83%D1%81%D0%BB%D0%BE%D0%B2%D0%B8%D1%8F">3.8. Короткая запись условия</a></li>
+</ul>
+</li>
+<li><a href="#%D0%B3%D0%BB%D0%B0%D0%B2%D0%B0-iv-%D1%87%D1%82%D0%BE-%D1%82%D0%B0%D0%BA%D0%BE%D0%B5-%D1%80%D0%B5%D0%B3%D1%83%D0%BB%D1%8F%D1%80%D0%BD%D1%8B%D0%B5-%D0%B2%D1%8B%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D1%8F-%D0%B8-%D1%81-%D1%87%D0%B5%D0%BC-%D0%B8%D1%85-%D0%B5%D1%81%D1%82%D1%8C">Глава IV. Что такое регулярные выражения и с чем их есть?</a>
+<ul>
+<li><a href="#41-%D1%8D%D1%82%D0%BE-%D0%B1%D0%B0%D0%B7%D0%B0">4.1. Это база!</a></li>
+<li><a href="#42-%D1%81%D0%BD%D0%BE%D0%B2%D0%B0--">4.2. Снова <code>[ ]</code></a></li>
+<li><a href="#42-%D0%BA%D0%B2%D0%B0%D0%BD%D1%82%D0%BE%D1%80%D1%8B">4.2. Кванторы</a></li>
+<li><a href="#43-%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5">4.3. Экранирование</a></li>
+<li><a href="#44-%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%B5%D0%BD%D0%B8%D1%8F">4.4. Повторения</a></li>
+<li><a href="#45-%D0%B3%D1%80%D1%83%D0%BF%D0%BF%D1%8B">4.5. Группы</a></li>
+<li><a href="#46-%D1%8F%D0%BA%D0%BE%D1%80%D1%8F">4.6. Якоря</a></li>
+<li><a href="#47-%D1%87%D0%B8%D1%81%D0%BB%D0%B0">4.7. Числа!</a></li>
+<li><a href="#48-%D1%81-%D1%87%D0%B5%D0%BC-%D1%80%D0%B5%D0%B3%D1%83%D0%BB%D1%8F%D1%80%D0%BD%D1%8B%D0%B5-%D0%B2%D1%8B%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D1%8F-%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8C-%D0%BD%D0%B5%D0%BB%D1%8C%D0%B7%D1%8F-%D0%B8%D0%BB%D0%B8-%D0%BC%D0%B0%D1%81%D0%BA%D0%B8-%D1%84%D0%B0%D0%B9%D0%BB%D0%BE%D0%B2">4.8. С чем регулярные выражения путать нельзя или маски файлов</a></li>
+</ul>
+</li>
+<li><a href="#%D0%B3%D0%BB%D0%B0%D0%B2%D0%B0-v-%D0%BC%D0%B0%D0%B3%D0%B8%D1%8F-%D0%BC%D0%B0%D1%82%D0%B5%D0%BC%D0%B0%D1%82%D0%B8%D0%BA%D0%B8">Глава V. Магия математики</a>
+<ul>
+<li><a href="#51-%D1%88%D0%BA%D0%BE%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F-%D0%B0%D1%80%D0%B8%D1%84%D0%BC%D0%B5%D1%82%D0%B8%D0%BA%D0%B0">5.1. Школьная арифметика</a></li>
+<li><a href="#52-%D0%B2%D0%BE%D0%B7%D0%B2%D1%80%D0%B0%D1%82-%D1%80%D0%B5%D0%B7%D1%83%D0%BB%D1%8C%D1%82%D0%B0%D1%82%D0%B0-%D0%B2%D1%8B%D1%87%D0%B8%D1%81%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F">5.2. Возврат результата вычисления</a></li>
+<li><a href="#53-%D0%BA%D0%BE%D0%BD%D0%BA%D0%B0%D1%82%D0%B5%D0%BD%D0%B0%D1%86%D0%B8%D1%8F---%D0%BD%D0%B5-%D1%81%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5">5.3. Конкатенация - не сложение!</a></li>
+<li><a href="#54-%D0%BC%D0%B0%D1%82%D0%B5%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5-%D1%83%D1%81%D0%BB%D0%BE%D0%B2%D0%B8%D1%8F">5.4. Математические условия</a></li>
+</ul>
+</li>
+<li><a href="#%D0%B3%D0%BB%D0%B0%D0%B2%D0%B0-vi-%D0%B2%D0%BE%D1%82-%D0%BE%D0%BD%D0%B8-%D1%81%D0%BB%D0%B5%D0%B2%D0%B0-%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BE-while-until-for">Глава VI. Вот они, слева направо: <code>while</code>, <code>until</code>, <code>for</code></a>
+<ul>
+<li><a href="#61-while-%D0%B8-until">6.1. <code>while</code> и <code>until</code></a></li>
+<li><a href="#62-%D0%B2%D1%81%D0%B5%D0%BC%D0%BE%D0%B3%D1%83%D1%89%D0%B8%D0%B9-for">6.2. Всемогущий <code>for</code></a>
+<ul>
+<li><a href="#621-%D0%B4%D0%BB%D1%8F-%D0%BC%D0%B0%D1%81%D1%81%D0%B8%D0%B2%D0%BE%D0%B2">6.2.1. Для массивов</a></li>
+<li><a href="#622-%D0%B4%D0%BB%D1%8F-%D0%BF%D1%80%D0%BE%D1%81%D1%82%D1%8B%D1%85-%D0%BF%D0%BE%D1%81%D0%BB%D0%B5%D0%B4%D0%BE%D0%B2%D0%B0%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%D1%81%D1%82%D0%B5%D0%B9">6.2.2. Для простых последовательностей</a></li>
+<li><a href="#623-c%D0%B8-%D1%81%D1%82%D0%B0%D0%B9%D0%BB">6.2.3. Cи-стайл</a></li>
+</ul>
+</li>
+<li><a href="#63-%D0%BE%D0%B1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%B0-%D0%BF%D0%BE%D0%B7%D0%B8%D1%86%D0%B8%D0%BE%D0%BD%D0%BD%D1%8B%D1%85-%D0%BF%D0%B0%D1%80%D0%B0%D0%BC%D0%B5%D1%82%D1%80%D0%BE%D0%B2">6.3. Обработка позиционных параметров</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div style="page-break-after: always;"></div>
+<h2 id="%D0%BE%D1%82-%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B0">От автора</h2>
+<p>Методическое пособие создано для потока 1-го курса ИУ7 2023 года для помощи в освоении предмета ПТП.
+Автор допускает, что в методическом пособии присутствуют ошибки, поэтому о них следует сообщать по контактам ниже:</p>
+<ul>
+<li>telegram: <code>@zhikhkirill</code></li>
+<li>VK: <code>@zhikh.localhost</code></li>
+</ul>
+<h2 id="%D0%B3%D0%BB%D0%B0%D0%B2%D0%B0-i-%D0%B4%D0%B0-%D0%BA%D1%82%D0%BE-%D1%8D%D1%82%D0%BE%D1%82-%D0%B2%D0%B0%D1%88-bash">Глава I. Да кто этот ваш <code>.bash</code>?</h2>
+<p>Программисты — люди ленивые, привыкшие все автоматизировать.
+Поэтому неудивительно, что появилась такая вещь, как bash-скрипты (далее автор будет называть bash-скрипты просто <strong>bash</strong>).
+В bash можно записывать целые сценарии для выполнения рутинной работы. Приведу пример:</p>
+<pre class="hljs"><code><div><span class="hljs-meta">#!/bin/bash</span>
+<span class="hljs-comment"># test.sh</span>
+
+<span class="hljs-keyword">for</span> file <span class="hljs-keyword">in</span> <span class="hljs-string">"./tests/in/*"</span>; <span class="hljs-keyword">do</span>
+    cat <span class="hljs-variable">$file</span> | python3 my_lab.py &gt; <span class="hljs-variable">${file/in/out}</span>
+<span class="hljs-keyword">done</span>
+</div></code></pre>
+<p>Скрипт автоматически вводит данные в Вашу программу (например, лабораторную по программированию) и записывает результаты в файл.
+Таким образом Вы можете протестировать свою программу сразу на нескольких массивах входных данных <em>одной командой!</em></p>
+<pre class="hljs"><code><div>bash test.sh
+</div></code></pre>
+<p>Неплохо, не правда ли? А ведь это только начало! Возможности BASH-скриптов ограничены лишь Вашим воображением.</p>
+<p>И да, <code>bash</code> есть на <code>Linux</code>-системах. Предмет ПТП подразумевает, что у Вас уже есть данная ОС в любом виде.</p>
+<p>Перейдём к основному материалу.</p>
+<h2 id="%D0%B3%D0%BB%D0%B0%D0%B2%D0%B0-ii-%D1%81%D1%82%D1%80%D0%BE%D0%BA%D0%B8--%D1%8D%D1%82%D0%BE-%D0%B2%D1%81%D1%91">Глава II. Строки — это всё</h2>
+<blockquote>
+<p>В bash-e нет типов переменных!</p>
+</blockquote>
+<p>Просто запомните это. Каждый раз, когда Вы используете переменную, помните эти слова.
+Чтобы лучше это понять, я задам Вам вопрос: а есть ли типы данных в языке программирования Python (далее — просто Python)? Ведь мы можем сделать так:</p>
+<pre class="hljs"><code><div>a = <span class="hljs-number">5</span>
+a = <span class="hljs-string">"foo"</span>
+</div></code></pre>
+<p>Как будто у переменной <code>a</code> нет определённого типа. Однако это не означает, что в Python нет типов данных. Просто <em>переменная не имеет строго определённого типа</em>, т.к. в этом ЯП (язык программирования) <em>динамическая типизация</em>.</p>
+<pre class="hljs"><code><div><span class="hljs-meta">&gt;&gt;&gt; </span>a = <span class="hljs-string">"foo"</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span>type(a)
+&lt;<span class="hljs-class"><span class="hljs-keyword">class</span> '<span class="hljs-title">str</span>'&gt;
+&gt;&gt;&gt; <span class="hljs-title">a</span> = 5
+&gt;&gt;&gt; <span class="hljs-title">type</span><span class="hljs-params">(a)</span>
+&lt;<span class="hljs-title">class</span> '<span class="hljs-title">int</span>'&gt;
+</span></div></code></pre>
+<p>А вот с bash-ем все не так:</p>
+<blockquote>
+<p>В bash все переменные являются строками!</p>
+</blockquote>
+<p>Исходя из этого утверждения будет строиться вся логика работы bash-а.</p>
+<h3 id="21-%D0%BE%D0%B1%D1%8A%D1%8F%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF%D0%B5%D1%80%D0%B5%D0%BC%D0%B5%D0%BD%D0%BD%D1%8B%D1%85">2.1. Объявление переменных</h3>
+<p>Все просто, например переменная <code>var</code> со значением 5:</p>
+<pre class="hljs"><code><div>var=5
+</div></code></pre>
+<p>Обязательно без пробелов!</p>
+<pre class="hljs"><code><div>var=5       <span class="hljs-comment"># CORRECT</span>
+var = 5     <span class="hljs-comment"># INCORRECT</span>
+var= foo    <span class="hljs-comment"># INCORRECT</span>
+var =bar    <span class="hljs-comment"># INCORRECT</span>
+</div></code></pre>
+<h3 id="22-%D1%87%D1%82%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF%D0%B5%D1%80%D0%B5%D0%BC%D0%B5%D0%BD%D0%BD%D1%8B%D1%85-%D0%B8%D0%BB%D0%B8-%D0%BF%D0%BE%D1%87%D0%B5%D0%BC%D1%83-%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%81%D1%82%D0%B0%D0%BC-%D1%82%D0%B0%D0%BA-%D0%BC%D0%BD%D0%BE%D0%B3%D0%BE-%D0%BF%D0%BB%D0%B0%D1%82%D1%8F%D1%82">2.2. Чтение переменных или почему программистам так много платят</h3>
+<p>Просто потому, что они используют символ доллара <code>$</code> для чтения переменных:</p>
+<pre class="hljs"><code><div>a=5
+<span class="hljs-built_in">echo</span> <span class="hljs-variable">$a</span>     <span class="hljs-comment"># 5</span>
+</div></code></pre>
+<p>Иногда нужно чётко ограничить название переменной, например:</p>
+<pre class="hljs"><code><div>a=foo
+abar=<span class="hljs-string">"i wanted something else..."</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-variable">$abar</span>      <span class="hljs-comment"># i wanted something else...</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-variable">${a}</span>bar    <span class="hljs-comment"># foobar</span>
+</div></code></pre>
+<p>Как вывести знак доллара, если он означает чтение переменной? Используем экранирование:</p>
+<pre class="hljs"><code><div>a=5
+<span class="hljs-built_in">echo</span> <span class="hljs-variable">$a</span>
+<span class="hljs-built_in">echo</span> \<span class="hljs-variable">$a</span>
+</div></code></pre>
+<p>Вывод:</p>
+<pre class="hljs"><code><div>5
+$a
+</div></code></pre>
+<h3 id="23-%D1%87%D1%82%D0%BE-%D1%82%D0%B0%D0%BC-%D0%BF%D0%BE%D0%B4-%D0%BA%D0%B0%D0%BF%D0%BE%D1%82%D0%BE%D0%BC">2.3. Что там, под капотом?</h3>
+<p>Чтобы понять, как работают переменные под капотом, рассмотрим такой код:</p>
+<pre class="hljs"><code><div>a=<span class="hljs-string">"hello"</span>
+b=<span class="hljs-string">"echo <span class="hljs-variable">$a</span>"</span>
+<span class="hljs-variable">$b</span>
+</div></code></pre>
+<blockquote>
+<p>Интерпретатор в большинстве случаев не работает с переменными напрямую. Он проходит по строке и заменяет все указания переменных на их соответствующее значение, а <em>потом исполняет строку как код</em>.</p>
+</blockquote>
+<pre class="hljs"><code><div>   b=<span class="hljs-string">"echo <span class="hljs-variable">$a</span>"</span>   <span class="hljs-comment"># source code</span>
+<span class="hljs-comment">#      |</span>
+<span class="hljs-comment">#  $a -&gt; hello</span>
+<span class="hljs-comment">#      |</span>
+<span class="hljs-comment">#      V</span>
+ b=<span class="hljs-string">"echo hello"</span>  <span class="hljs-comment"># command</span>
+</div></code></pre>
+<pre class="hljs"><code><div>         <span class="hljs-variable">$b</span>      <span class="hljs-comment"># source </span>
+<span class="hljs-comment">#        |</span>
+<span class="hljs-comment">#  $b -&gt; echo hello</span>
+<span class="hljs-comment">#        |</span>
+<span class="hljs-comment">#        V</span>
+      <span class="hljs-built_in">echo</span> hello <span class="hljs-comment"># command</span>
+</div></code></pre>
+<p>Именно поэтому Вы могли часто замечать ошибку <code>bash: &lt;sth&gt;: not found</code>. Интерпретатор подставляет на место переменной её значение и пытается выполнить как команду.</p>
+<h3 id="24-%D0%BD%D0%B5%D1%81%D0%BA%D0%BE%D0%BB%D1%8C%D0%BA%D0%BE-%D1%81%D0%BF%D0%BE%D1%81%D0%BE%D0%B1%D0%BE%D0%B2-%D0%B2%D0%B7%D0%B0%D0%B8%D0%BC%D0%BE%D0%B4%D0%B5%D0%B9%D1%81%D1%82%D0%B2%D0%B8%D1%8F-%D1%81%D0%BE-%D1%81%D1%82%D1%80%D0%BE%D0%BA%D0%B0%D0%BC%D0%B8">2.4. Несколько способов взаимодействия со строками</h3>
+<h4 id="241-%D0%B4%D0%BB%D0%B8%D0%BD%D0%B0-%D1%81%D1%82%D1%80%D0%BE%D0%BA%D0%B8">2.4.1. Длина строки</h4>
+<pre class="hljs"><code><div>a=abc
+<span class="hljs-built_in">echo</span> <span class="hljs-variable">${#a}</span>  <span class="hljs-comment"># 3</span>
+</div></code></pre>
+<h4 id="242-%D0%BF%D1%80%D0%B8%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BA-%D0%BE%D0%BF%D1%80%D0%B5%D0%B4%D0%B5%D0%BB%D1%91%D0%BD%D0%BD%D0%BE%D0%BC%D1%83-%D1%80%D0%B5%D0%B3%D0%B8%D1%81%D1%82%D1%80%D1%83">2.4.2. Приведение к определённому регистру</h4>
+<pre class="hljs"><code><div>a=Abc
+<span class="hljs-built_in">echo</span> <span class="hljs-variable">${a,,}</span>     <span class="hljs-comment"># abc</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-variable">${a^^}</span>     <span class="hljs-comment"># ABC</span>
+</div></code></pre>
+<h3 id="25-%D0%B2%D0%B2%D0%BE%D0%B4-%D0%BF%D0%B5%D1%80%D0%B5%D0%BC%D0%B5%D0%BD%D0%BD%D1%8B%D1%85-%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D1%82%D0%B5%D0%BB%D0%B5%D0%BC">2.5. Ввод переменных пользователем</h3>
+<p>Если переменные вводятся построчно:</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">read</span> a
+<span class="hljs-built_in">read</span> b
+</div></code></pre>
+<p>Если через пробел:</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">read</span> a b
+</div></code></pre>
+<p>Обратите внимание: никаких <code>$</code> не нужно!</p>
+<p>Если нужно ввести <em>не</em> через пробел, а, например, через запятую и пробел, можно изменить разделитель:</p>
+<pre class="hljs"><code><div>IFS=<span class="hljs-string">", "</span>
+</div></code></pre>
+<p>Хорошей практикой будет сохранять значение предыдущего разделителя:</p>
+<pre class="hljs"><code><div>OLD_IFS=<span class="hljs-variable">$IFS</span>
+IFS=<span class="hljs-string">", "</span>
+
+<span class="hljs-built_in">read</span> a b
+
+IFS=<span class="hljs-variable">$OLD_IFS</span>
+</div></code></pre>
+<h3 id="26-%D0%BA%D0%B0%D0%B2%D1%8B%D1%87%D0%BA%D0%B8-%D0%BD%D0%B5-%D0%BD%D0%B5-%D1%81%D0%BB%D1%8B%D1%88%D0%B0%D0%BB%D0%B8">2.6. Кавычки? Не, не слышали</h3>
+<p>Автор часто замечал такую запись:</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># WRONG</span>
+a=<span class="hljs-string">"foo"</span>
+</div></code></pre>
+<p>Или:</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># WRONG</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"<span class="hljs-variable">${a}</span>"</span>
+</div></code></pre>
+<p>Однако кавычки в этих случаях <em>избыточны</em>. Нам ничто не мешает сделать так:</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># CORRECT</span>
+a=foo
+<span class="hljs-built_in">echo</span> <span class="hljs-variable">$a</span>
+</div></code></pre>
+<p>Потому что вне зависимости от наличия кавычек, переменная всё равно будет, и будет она <em>строковой</em>.</p>
+<p>Но если Вам нужно создать переменную с пробелом внутри, то кавычки обязательны!</p>
+<pre class="hljs"><code><div>a=<span class="hljs-string">"foo bar"</span>
+</div></code></pre>
+<p>Аналогично для вывода данных через <code>echo</code>. Кавычки в большинстве случаев можно опускать:</p>
+<pre class="hljs"><code><div>a=foo
+b=bar
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"<span class="hljs-variable">$a</span> <span class="hljs-variable">$b</span>"</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-variable">$a</span> <span class="hljs-variable">$b</span>
+</div></code></pre>
+<p>Вывод будет:</p>
+<pre class="hljs"><code><div>foo bar
+foo bar
+</div></code></pre>
+<p>Вот случай, когда без кавычек никак:</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">echo</span> <span class="hljs-string">"<span class="hljs-variable">$a</span> "</span>
+</div></code></pre>
+<p>А как вывести строку с кавычками? Применяем экранирование:</p>
+<pre class="hljs"><code><div>a=foo
+b=bar
+<span class="hljs-built_in">echo</span> \"<span class="hljs-variable">$a</span> <span class="hljs-variable">$b</span>\"
+</div></code></pre>
+<p>Тогда вывод будет:</p>
+<pre class="hljs"><code><div>&quot;foo bar&quot;
+</div></code></pre>
+<p>Не нужен перевод на новую строку? Делаем так:</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">echo</span> -n <span class="hljs-string">"some"</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">" text"</span>
+</div></code></pre>
+<p>Вывод:</p>
+<pre class="hljs"><code><div>some text
+</div></code></pre>
+<h3 id="27-%D0%B7%D0%B0%D0%B3%D0%B0%D0%B4%D0%BE%D1%87%D0%BD%D1%8B%D0%B9-%D0%B4%D0%BE%D0%BB%D0%BB%D0%B0%D1%80">2.7. Загадочный доллар</h3>
+<p>В bash-е есть уникальные переменные. Одна из них - это <code>$?</code>.
+Её значение равно <em>коду возврата последней выполненной команды</em>. Например:</p>
+<pre class="hljs"><code><div>some_program
+<span class="hljs-built_in">echo</span> $?
+</div></code></pre>
+<blockquote>
+<p>Код возврата равен 0, если программа завершилась успешно.</p>
+</blockquote>
+<p>Поэтому команда <code>true</code> (да, есть такая команда) всегда возвращает <code>0</code>, а <code>false</code> - <code>1</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-literal">true</span>
+<span class="hljs-built_in">echo</span> $?     <span class="hljs-comment"># 0</span>
+<span class="hljs-literal">false</span>
+<span class="hljs-built_in">echo</span> $?     <span class="hljs-comment"># 1</span>
+</div></code></pre>
+<p>Зачем это надо? Вернёмся к <code>$?</code> в будущем.</p>
+<h3 id="28-%D0%BF%D0%BE%D0%B7%D0%B8%D1%86%D0%B8%D0%BE%D0%BD%D0%BD%D1%8B%D0%B5-%D0%BF%D0%B5%D1%80%D0%B5%D0%BC%D0%B5%D0%BD%D0%BD%D1%8B%D0%B5">2.8. Позиционные переменные</h3>
+<p>Ещё один тип особых переменных.
+Увидим их в действии. Запустим такой код:</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># test.sh</span>
+<span class="hljs-built_in">echo</span> \<span class="hljs-variable">$0</span>=<span class="hljs-variable">$0</span> 
+<span class="hljs-built_in">echo</span> \<span class="hljs-variable">$1</span>=<span class="hljs-variable">$1</span>
+</div></code></pre>
+<p>Запускаем вот так:</p>
+<pre class="hljs"><code><div>your-directory@username$ bash test.sh hello
+</div></code></pre>
+<p>Получаем ответ:</p>
+<pre class="hljs"><code><div>$0=your-directory/test.sh
+$1=hello
+</div></code></pre>
+<p>Как Вы заметили, <code>$n</code>, где n — неотрицательное число, это ничто иное, как аргументы при запуске скрипта. Причём первый (т.е. нулевой аргумент) <em>это всегда абсолютный путь до иcполняемого файла</em>.</p>
+<p>Т.е. если ваша программа лежит тут:</p>
+<pre class="hljs"><code><div>/home/iushnik-s-semerki/scripts/my_script.sh
+</div></code></pre>
+<p>То переменная <code>$0</code> соответственно будет равна этому значению.</p>
+<p>А для остальных:</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># test.sh</span>
+<span class="hljs-built_in">echo</span> \<span class="hljs-variable">$1</span>=<span class="hljs-variable">$1</span>
+<span class="hljs-built_in">echo</span> \<span class="hljs-variable">$2</span>=<span class="hljs-variable">$2</span>
+<span class="hljs-built_in">echo</span> \<span class="hljs-variable">$3</span>=<span class="hljs-variable">$3</span>
+</div></code></pre>
+<pre class="hljs"><code><div>bash test.sh foo bar <span class="hljs-string">"foo bar"</span>
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-variable">$1</span>=foo
+<span class="hljs-variable">$2</span>=bar
+<span class="hljs-variable">$3</span>=foo bar
+</div></code></pre>
+<p>Можно читать аргументы запуска скрипта не по отдельности, а сразу:</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># test.sh a b c</span>
+<span class="hljs-built_in">echo</span> $*     <span class="hljs-comment"># a b c</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-variable">$@</span>     <span class="hljs-comment"># a b c</span>
+</div></code></pre>
+<p>В чём отличие? Вернёмся к вопросу в главе 6.</p>
+<h3 id="29-%D0%B2%D0%BE%D0%BF%D1%80%D0%BE%D1%81%D1%8B-%D1%81%D1%83%D1%89%D0%B5%D1%81%D1%82%D0%B2%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F-%D1%81-%D1%82%D0%BE%D1%87%D0%BA%D0%B8-%D0%B7%D1%80%D0%B5%D0%BD%D0%B8%D1%8F-%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%81%D1%82%D0%B0">2.9. Вопросы существования с точки зрения программиста</h3>
+<p>А что, если мы попытаемся обратиться к несуществующей переменной?
+Попробуем:</p>
+<pre class="hljs"><code><div>a=5
+<span class="hljs-built_in">echo</span> <span class="hljs-variable">$a</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-variable">$b</span>
+</div></code></pre>
+<p>И мы получим...</p>
+<pre class="hljs"><code><div>5
+
+</div></code></pre>
+<p>... просто пустую строку на месте переменной <code>b</code>! Никаких вам <code>NameError: name 'b' is not exists</code>!</p>
+<blockquote>
+<p>В bash несуществующая переменная является пустой строкой.</p>
+</blockquote>
+<p>Поэтому код ниже абсолютно рабочий:</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">echo</span> <span class="hljs-variable">$a</span>             <span class="hljs-comment"># Empty output</span>
+b=<span class="hljs-variable">$a</span>                <span class="hljs-comment"># Empty var 'b'</span>
+c=<span class="hljs-string">"my answer: <span class="hljs-variable">$a</span>"</span>   <span class="hljs-comment"># my answer: </span>
+</div></code></pre>
+<p>Ещё можно удалить переменную командой <code>unset</code></p>
+<pre class="hljs"><code><div>a=5
+<span class="hljs-built_in">echo</span> <span class="hljs-variable">$a</span>     <span class="hljs-comment"># 5</span>
+<span class="hljs-built_in">unset</span> a
+<span class="hljs-built_in">echo</span> <span class="hljs-variable">$a</span>     <span class="hljs-comment"># nothing</span>
+</div></code></pre>
+<p>А как определять, существует ли переменная? Об этом пойдёт речь в следующей главе.</p>
+<h2 id="%D0%B3%D0%BB%D0%B0%D0%B2%D0%B0-iii-%D0%B2%D0%B5%D1%82%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F-%D0%B2-bash-%D0%B5-%D0%B8%D0%BB%D0%B8-%22%D0%B0-%D1%87%D1%82%D0%BE-%D0%B5%D1%81%D0%BB%D0%B8%22">Глава III. Ветвления в bash-е или &quot;А что, если...&quot;</h2>
+<h3 id="31-%D1%81%D0%B8%D0%BD%D1%82%D0%B0%D0%BA%D1%81%D0%B8%D1%81">3.1. Синтаксис</h3>
+<p>Красиво и понятно. Что ещё можно сказать?</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">if</span> [ <span class="hljs-variable">$a</span> ]
+<span class="hljs-keyword">then</span>
+    <span class="hljs-built_in">echo</span> Hello!
+<span class="hljs-keyword">fi</span>
+</div></code></pre>
+<p>Несколько логических строчек кода можно расположить на одной физической, применяя разделитель <code>;</code>:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">if</span> [ <span class="hljs-variable">$a</span> ]; <span class="hljs-keyword">then</span>
+    <span class="hljs-built_in">echo</span> Hello!
+<span class="hljs-keyword">fi</span>
+</div></code></pre>
+<p>Немножко вариативности:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">if</span> [ <span class="hljs-variable">$a</span> ]; <span class="hljs-keyword">then</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-variable">$a</span>
+<span class="hljs-keyword">else</span>
+    <span class="hljs-built_in">echo</span> ERROR
+<span class="hljs-keyword">fi</span>
+</div></code></pre>
+<p>Или так:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">if</span> [ <span class="hljs-variable">$a</span> ]; <span class="hljs-keyword">then</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-variable">$a</span>
+<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> [ <span class="hljs-variable">$b</span> ]; <span class="hljs-keyword">then</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-variable">$b</span>
+<span class="hljs-keyword">fi</span>
+<span class="hljs-keyword">fi</span>
+</div></code></pre>
+<p>Обратите внимание: каждый раз, открывая условие <code>if</code>, необходимо его закрыть <code>fi</code>. Дважды использовали <code>if</code> — дважды закрыли <code>fi</code>.</p>
+<p>Однако можно быть проще:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">if</span> [ <span class="hljs-variable">$a</span> ]; <span class="hljs-keyword">then</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-variable">$a</span>
+<span class="hljs-keyword">elif</span> [ <span class="hljs-variable">$b</span> ]; <span class="hljs-keyword">then</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-variable">$b</span>
+<span class="hljs-keyword">fi</span>
+</div></code></pre>
+<h3 id="32-%D1%87%D0%B5%D0%BC-%D0%B1%D0%BE%D0%BB%D1%8C%D1%88%D0%B5---%D1%82%D0%B5%D0%BC-%D0%BB%D1%83%D1%87%D1%88%D0%B5">3.2. Чем больше - тем лучше</h3>
+<p>«Подождите, но я видел такие же условия, но с <code>[[ ]]</code>. А в чём отличие?»</p>
+<p>Дело в том, что до <code>bash</code>-а был <code>sh</code>. Но bash, в отличие от последнего, имеет множество нововведений. Для обратной совместимости все возможности shell-а были сохранены, а новые &quot;фишки&quot; появились в новых скобках - тех самых <code>[[ ]]</code>.</p>
+<p>Какой вывод можно сделать? Т.к. в курсе ПТП мы рассматриваем исключительно bash, и не требуется никакой обратной совместимости со старым интепретатором, смело используем <code>[[ ]]</code>.</p>
+<blockquote>
+<p>Если сомневаетесь, то между <code>[ ]</code> и <code>[[ ]]</code> выбирайте двойные скобки!</p>
+</blockquote>
+<p>Далее автор будет использовать оба варианта записи.</p>
+<h3 id="32-%D1%81%D0%BE%D1%86%D0%B8%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D0%B5-%D0%B4%D0%B8%D1%81%D1%82%D0%B0%D0%BD%D1%86%D0%B8%D0%BE%D0%BD%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5">3.2. Социальное дистанционирование</h3>
+<blockquote>
+<p><code>[ ]</code> и <code>[[ ]]</code> <em>требуют пробелов рядом с собой</em>!</p>
+</blockquote>
+<pre class="hljs"><code><div><span class="hljs-keyword">if</span> [<span class="hljs-variable">$a</span>]; <span class="hljs-keyword">then</span> <span class="hljs-built_in">echo</span> foo; <span class="hljs-keyword">fi</span>      <span class="hljs-comment"># INCORRECT</span>
+<span class="hljs-keyword">if</span> [ <span class="hljs-variable">$a</span> ]; <span class="hljs-keyword">then</span> <span class="hljs-built_in">echo</span> bar; <span class="hljs-keyword">fi</span>    <span class="hljs-comment"># CORRECT</span>
+
+<span class="hljs-keyword">if</span> [[<span class="hljs-variable">$a</span>]]; <span class="hljs-keyword">then</span> <span class="hljs-built_in">echo</span> foo; <span class="hljs-keyword">fi</span>    <span class="hljs-comment"># INCORRECT</span>
+<span class="hljs-keyword">if</span> [[ <span class="hljs-variable">$a</span> ]]; <span class="hljs-keyword">then</span> <span class="hljs-built_in">echo</span> foo; <span class="hljs-keyword">fi</span>  <span class="hljs-comment"># CORRECT</span>
+</div></code></pre>
+<h3 id="33-%D0%B2%D0%BE%D0%BF%D1%80%D0%BE%D1%81%D1%8B-%D0%B1%D1%8B%D1%82%D0%B8%D1%8F-%D1%87%D0%B0%D1%81%D1%82%D1%8C-ii">3.3. Вопросы бытия, часть II</h3>
+<p>А теперь ответим на вопрос, заданный в предыдущей главе. Проверить переменную на существование очень просто:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">if</span> [ <span class="hljs-variable">$a</span> ]; <span class="hljs-keyword">then</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"\$a exists; \$a=<span class="hljs-variable">${a}</span>"</span>
+<span class="hljs-keyword">else</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"\$a does not exists"</span>
+<span class="hljs-keyword">fi</span>
+</div></code></pre>
+<p>Просто и надёжно. Пользуйтесь на здоровье!</p>
+<h3 id="34-advanced-level-%D0%B2%D0%B5%D1%82%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B9">3.4. Advanced-level ветвлений</h3>
+<h4 id="%D0%BB%D0%BE%D0%B3%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5-%D0%BE%D0%BF%D0%B5%D1%80%D0%B0%D1%82%D0%BE%D1%80%D1%8B-%D0%B8-%D1%8D%D0%BA%D0%B2%D0%B8%D0%B2%D0%B0%D0%BB%D0%B5%D1%82%D0%BD%D0%BE%D1%81%D1%82%D1%8C">Логические операторы и эквивалетность:</h4>
+<p>В порядке приоритета:</p>
+<ol>
+<li><code>не</code>  = <code>!</code></li>
+<li><code>и</code>   = <code>&amp;&amp;</code></li>
+<li><code>или</code> = <code>||</code></li>
+</ol>
+<p>Пример использования:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">if</span> [ ! <span class="hljs-variable">$a</span> ] &amp;&amp; ! [ <span class="hljs-variable">$b</span> ] || [ <span class="hljs-variable">$c</span> ]; <span class="hljs-keyword">then</span>
+    ...
+<span class="hljs-keyword">fi</span>
+</div></code></pre>
+<p><code>!</code> можно записать как внутри <code>[ ]</code>, так и снаружи, чего не скажешь про <code>&amp;&amp;</code> и <code>||</code>.</p>
+<p>Можно использовать <code>( )</code> для изменения приоритета:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">if</span> ! ([ <span class="hljs-variable">$a</span> ] &amp;&amp; [ <span class="hljs-variable">$b</span> ]); <span class="hljs-keyword">then</span> 
+    <span class="hljs-built_in">echo</span> ERROR
+<span class="hljs-keyword">fi</span>
+</div></code></pre>
+<h4 id="%D0%B8"><code>==</code> и <code>!=</code></h4>
+<p>Несложно догадаться, для чего нужны эти операторы. Записывать внутри скобок:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">if</span> [[ <span class="hljs-variable">$a</span> == <span class="hljs-variable">$b</span> ]]; <span class="hljs-keyword">then</span>
+    <span class="hljs-built_in">echo</span> \<span class="hljs-string">'a\'</span> is \<span class="hljs-string">'b\'</span>
+<span class="hljs-keyword">fi</span>
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-keyword">if</span> [[ <span class="hljs-variable">$a</span> != <span class="hljs-variable">$b</span> ]]; <span class="hljs-keyword">then</span>
+    <span class="hljs-built_in">echo</span> \<span class="hljs-string">'a\'</span> is not \<span class="hljs-string">'b\'</span>
+<span class="hljs-keyword">fi</span>
+</div></code></pre>
+<p>Тот случай, когда нужно использовать <code>[[  ]]</code>. Просто запомните.</p>
+<h3 id="35-%D0%B6%D0%B8%D0%B7%D0%BD%D0%B8-%D0%BF%D1%80%D0%BE%D0%B1%D0%B5%D0%BB%D0%BE%D0%B2-%D1%82%D0%BE%D0%B6%D0%B5-%D0%B2%D0%B0%D0%B6%D0%BD%D1%8B">3.5. Жизни пробелов тоже важны!</h3>
+<p>Пробелы очень важны! Очень легко потерять пробел и сломать скрипт:</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># INCORRECT</span>
+![ <span class="hljs-variable">$a</span> ]               
+!([ <span class="hljs-variable">$a</span> ] &amp;&amp; [ <span class="hljs-variable">$b</span> ])
+[[<span class="hljs-variable">$a</span> == <span class="hljs-variable">$b</span>]]
+[[ <span class="hljs-variable">$a</span>!=<span class="hljs-variable">$b</span> ]]
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-comment"># CORRECT</span>
+! [ <span class="hljs-variable">$a</span> ]               
+! ([ <span class="hljs-variable">$a</span> ] &amp;&amp; [ <span class="hljs-variable">$b</span> ])
+[[ <span class="hljs-variable">$a</span> == <span class="hljs-variable">$b</span> ]]
+[[ <span class="hljs-variable">$a</span> != <span class="hljs-variable">$b</span> ]]
+</div></code></pre>
+<h3 id="36-%D1%82%D0%B0%D0%B8%D0%BD%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D1%8B%D0%B5-%D0%BC%D0%B8%D0%BD%D1%83%D1%81%D1%8B">3.6. Таинственные минусы</h3>
+<p>Есть более архаичная запись всего того, что было перечислено:</p>
+<pre class="hljs"><code><div>[ <span class="hljs-variable">$a</span> -a <span class="hljs-variable">$b</span> ]    <span class="hljs-comment"># AND</span>
+[ <span class="hljs-variable">$a</span> -o <span class="hljs-variable">$b</span> ]    <span class="hljs-comment"># OR</span>
+[ <span class="hljs-variable">$a</span> -eq <span class="hljs-variable">$b</span> ]   <span class="hljs-comment"># ==</span>
+</div></code></pre>
+<p>Но тут придётся использовать экранирование <code>()</code>:</p>
+<pre class="hljs"><code><div>[ ! \( <span class="hljs-variable">$a</span> -a <span class="hljs-variable">$b</span> \) ]    <span class="hljs-comment"># equivalent to "! ([ $a ] &amp;&amp; [ $b ])"</span>
+</div></code></pre>
+<p>Забегая вперёд: если <code>$a</code> и <code>$b</code> являются числами, можно использовать такие операторы:</p>
+<pre class="hljs"><code><div>[ <span class="hljs-variable">$a</span> -lt <span class="hljs-variable">$b</span> ]   <span class="hljs-comment"># &lt;</span>
+[ <span class="hljs-variable">$a</span> -ge <span class="hljs-variable">$b</span> ]   <span class="hljs-comment"># &gt;=</span>
+</div></code></pre>
+<p>«Зачем это нужно?» Возвращаясь к теме обратной совместимости, такая запись использовалась в shell-е, а в bash перешла по наследству.</p>
+<p>На этом автор оставит минусы в покое и далее использоваться они не будут.</p>
+<h3 id="37">3.7. =~</h3>
+<p>Оператор <code>=~</code> определяет соответствие строки регулярному выражению.</p>
+<p>Синтаксис:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">if</span> [[ <span class="hljs-variable">$a</span> =~ ^[+-]?[0-9]+$ ]]; <span class="hljs-keyword">then</span>
+    <span class="hljs-built_in">echo</span> \<span class="hljs-string">'\$a\'</span> is number!
+<span class="hljs-keyword">fi</span>
+</div></code></pre>
+<p>Обратите внимание: <strong>никаких кавычек!</strong></p>
+<pre class="hljs"><code><div>a=123
+<span class="hljs-keyword">if</span> [[ <span class="hljs-variable">$a</span> =~ <span class="hljs-string">"^[0-9]+$"</span> ]]; <span class="hljs-keyword">then</span>
+    <span class="hljs-built_in">echo</span> foo
+<span class="hljs-keyword">fi</span>
+<span class="hljs-keyword">if</span> [[ <span class="hljs-variable">$a</span> =~ ^[0-9]+$ ]]; <span class="hljs-keyword">then</span>
+    <span class="hljs-built_in">echo</span> bar
+<span class="hljs-keyword">fi</span>
+</div></code></pre>
+<p>Вывод будет, как вы можете проверить:</p>
+<pre class="hljs"><code><div>bar
+</div></code></pre>
+<p>О регулярных выражениях пойдет речь в 4-ой главе.</p>
+<h3 id="38-%D0%BA%D0%BE%D1%80%D0%BE%D1%82%D0%BA%D0%B0%D1%8F-%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D1%8C-%D1%83%D1%81%D0%BB%D0%BE%D0%B2%D0%B8%D1%8F">3.8. Короткая запись условия</h3>
+<p>Тем, кто честно дочитал до этого момента (да ведь?), будет показан интересный трюк.</p>
+<p>Вместо того, чтобы писать</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">if</span> [ ! <span class="hljs-variable">$a</span> ]; <span class="hljs-keyword">then</span>
+    <span class="hljs-built_in">echo</span> ERROR
+<span class="hljs-keyword">fi</span>
+</div></code></pre>
+<p>Можно сделать так:</p>
+<pre class="hljs"><code><div>[ ! <span class="hljs-variable">$a</span> ] &amp;&amp; <span class="hljs-built_in">echo</span> ERROR
+</div></code></pre>
+<p>Или даже так:</p>
+<pre class="hljs"><code><div>[ <span class="hljs-variable">$a</span> ] &amp;&amp; <span class="hljs-built_in">echo</span> <span class="hljs-variable">$a</span> || <span class="hljs-built_in">echo</span> ERROR
+</div></code></pre>
+<p>Что будет эквивалентно:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">if</span> [ <span class="hljs-variable">$a</span> ]; <span class="hljs-keyword">then</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-variable">$a</span>
+<span class="hljs-keyword">else</span>
+    <span class="hljs-built_in">echo</span> ERROR
+<span class="hljs-keyword">fi</span>
+</div></code></pre>
+<p>Удобно, не правда ли? Но</p>
+<blockquote>
+<p>Однако лучше избегать такой записи условия.</p>
+</blockquote>
+<p>Злоупотребление такой формой приводит к нечитабельности кода.</p>
+<h2 id="%D0%B3%D0%BB%D0%B0%D0%B2%D0%B0-iv-%D1%87%D1%82%D0%BE-%D1%82%D0%B0%D0%BA%D0%BE%D0%B5-%D1%80%D0%B5%D0%B3%D1%83%D0%BB%D1%8F%D1%80%D0%BD%D1%8B%D0%B5-%D0%B2%D1%8B%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D1%8F-%D0%B8-%D1%81-%D1%87%D0%B5%D0%BC-%D0%B8%D1%85-%D0%B5%D1%81%D1%82%D1%8C">Глава IV. Что такое регулярные выражения и с чем их есть?</h2>
+<blockquote>
+<p><a href="https://regex101.com/">https://regex101.com</a> — регулярные выражения лучше всего писать и тестировать именно здесь. И все примеры лучше проверять здесь</p>
+</blockquote>
+<p>Регулярное выражение, простыми словами — некоторый шаблон, по которому можно определить соответствие строк. Это не строгое сравнение, как в случае с <code>==</code>, а &quot;умное&quot;. По регулярным выражениям есть целый предмет — Теория Формальных Языков (ТФЯ), кошмар для ИУ9.</p>
+<p>Регулярные выражения — очень полезный инструмент, с базовыми основами которого попробуем разобраться в этой главе.</p>
+<p><em>Единственное, что не могут регулярные выражения — так это <a href="https://stackoverflow.com/questions/1732348/regex-match-open-tags-except-xhtml-self-contained-tags">распарсить HTML</a></em></p>
+<h3 id="41-%D1%8D%D1%82%D0%BE-%D0%B1%D0%B0%D0%B7%D0%B0">4.1. Это база!</h3>
+<p>Регулярные выражения могут не использовать специальных символов:</p>
+<pre class="hljs"><code><div>text
+</div></code></pre>
+<p>Для строки:</p>
+<pre class="hljs"><code><div>some text
+</div></code></pre>
+<p>данному регулярному выражению будет соответствовать подстрока:</p>
+<pre class="hljs"><code><div>text
+</div></code></pre>
+<p>(проверьте на сайте выше, как это выглядит)</p>
+<p>Пример:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">if</span> [[ <span class="hljs-string">"some text"</span> =~ text ]]; <span class="hljs-keyword">then</span>
+    <span class="hljs-built_in">echo</span> yes
+<span class="hljs-keyword">else</span>
+    <span class="hljs-built_in">echo</span> no
+<span class="hljs-keyword">fi</span>
+</div></code></pre>
+<p><code>&quot;some text&quot;</code> - это строка, которую проверяем на соответствие регулярному выражению (на этом месте может быть переменная), и <code>text</code> - как ни странно, <strong>само регулярное выражение</strong>, просто записанное без спец. символов.</p>
+<p>Т.к. в строке <code>some text</code> есть подстрока <code>text</code>, результатом работы скрипта будет ответ <code>yes</code>.</p>
+<h3 id="42-%D1%81%D0%BD%D0%BE%D0%B2%D0%B0">4.2. Снова <code>[ ]</code></h3>
+<p><code>[ ]</code> - обозначают любой символ внутри. Например:</p>
+<pre class="hljs"><code><div><span class="hljs-literal">[<span class="hljs-identifier">ab</span>]</span>c
+</div></code></pre>
+<p>Будут соответствовать строки:</p>
+<pre class="hljs"><code><div>ac
+bc
+</div></code></pre>
+<p>Чтобы не писать весь алфавит, можно использовать диапазоны:</p>
+<ul>
+<li><code>[A-Z]</code> - заглавные латинские буквы</li>
+<li><code>[a-z]</code> - строчные латинские буквы</li>
+<li><code>[A-z]</code> - латинские буквы (именно в таком порядке!)</li>
+<li><code>[0-9]</code> - цифры</li>
+<li><code>[0-f]</code> - так тоже можно, это будут шестнадцатеричные цифры в нижнем регистре</li>
+</ul>
+<p>Например:</p>
+<pre class="hljs"><code><div><span class="hljs-literal">[<span class="hljs-number">0</span>-<span class="hljs-number">2</span>]</span><span class="hljs-literal">[<span class="hljs-number">0</span>-<span class="hljs-number">9</span>]</span>
+</div></code></pre>
+<p>Будут соответствовать строки:</p>
+<pre class="hljs"><code><div>00
+18
+29
+</div></code></pre>
+<p>и т.п.</p>
+<p>Чтобы не перебирать все возможные символы, &quot;любой символ&quot; можно задать <code>.</code>:</p>
+<pre class="hljs"><code><div>..
+</div></code></pre>
+<p>Будут соответствовать строки:</p>
+<pre class="hljs"><code><div>ab
+5$
+</div></code></pre>
+<h3 id="42-%D0%BA%D0%B2%D0%B0%D0%BD%D1%82%D0%BE%D1%80%D1%8B">4.2. Кванторы</h3>
+<p>Если простым языком, кванторы определяют количество предыдущей строки/символа в подстроке.</p>
+<ul>
+<li><code>?</code> - от 0 до 1</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-literal">[<span class="hljs-number">0</span>]</span>?<span class="hljs-literal">[<span class="hljs-number">1</span>-<span class="hljs-number">9</span>]</span>
+</div></code></pre>
+<p>Будут соответствовать строки:</p>
+<pre class="hljs"><code><div>2
+01
+</div></code></pre>
+<ul>
+<li><code>*</code> - больше или равно 0</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-literal">[<span class="hljs-number">0</span>-<span class="hljs-number">9</span>]</span>*
+</div></code></pre>
+<p>Будут соответствовать строки:</p>
+<pre class="hljs"><code><div>
+0
+35434646
+</div></code></pre>
+<ul>
+<li><code>+</code> - больше 0</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-literal">[<span class="hljs-number">0</span>-<span class="hljs-number">9</span>]</span>+
+</div></code></pre>
+<p>Будут соответствовать строки:</p>
+<pre class="hljs"><code><div>1
+1235
+</div></code></pre>
+<h3 id="43-%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5">4.3. Экранирование</h3>
+<p>Чтобы использовать специальный символ как сам символ, используется <strong>экранирование</strong> при помощи <code>\</code>.
+Например, если нам нужно регулярное выражение на проверку расширения файла:</p>
+<pre class="hljs"><code><div>.*\.txt
+</div></code></pre>
+<p>Первая точка будет обозначать <strong>любой символ</strong>, а вторая, экранированная, обозначает саму себя, т.е. точку.</p>
+<h3 id="44-%D0%BF%D0%BE%D0%B2%D1%82%D0%BE%D1%80%D0%B5%D0%BD%D0%B8%D1%8F">4.4. Повторения</h3>
+<p>Если нужно конкретное количество повторений подстроки, используются такие скобки — <code>{}</code>:</p>
+<pre class="hljs"><code><div><span class="hljs-literal">[<span class="hljs-number">1</span>-<span class="hljs-number">9</span>]</span><span class="hljs-literal">[<span class="hljs-number">0</span>-<span class="hljs-number">9</span>]</span>{<span class="hljs-number">3</span>}
+</div></code></pre>
+<p>Будут соответствовать строки:</p>
+<pre class="hljs"><code><div>1830
+2023
+</div></code></pre>
+<p>Или можно записать так:</p>
+<pre class="hljs"><code><div><span class="hljs-literal">[<span class="hljs-number">1</span>-<span class="hljs-number">9</span>]</span><span class="hljs-literal">[<span class="hljs-number">0</span>-<span class="hljs-number">9</span>]</span>{<span class="hljs-number">1</span>-<span class="hljs-number">3</span>}
+</div></code></pre>
+<p>Будут соответствовать строки:</p>
+<pre class="hljs"><code><div>10
+128
+1830
+</div></code></pre>
+<h3 id="45-%D0%B3%D1%80%D1%83%D0%BF%D0%BF%D1%8B">4.5. Группы</h3>
+<p>Если кванторы нужно применить не к одному символу, можно оборачивать нужную подстроку в <em>группу</em> <code>( )</code>:</p>
+<pre class="hljs"><code><div>(ab)*
+</div></code></pre>
+<p>Будут соответствовать строки:</p>
+<pre class="hljs"><code><div>
+ab
+ababab
+</div></code></pre>
+<h3 id="46-%D1%8F%D0%BA%D0%BE%D1%80%D1%8F">4.6. Якоря</h3>
+<p>Якоря обозначают начало и конец строки:</p>
+<ul>
+<li><code>^</code> - начало строки</li>
+<li><code>$</code> - конец строки</li>
+</ul>
+<p>При помощи якорей можно &quot;отбросить&quot; соответствие на подстроки. Например:</p>
+<pre class="hljs"><code><div>[[ <span class="hljs-string">"file.txt.a"</span> =~ .*\.txt ]]    <span class="hljs-comment"># True</span>
+[[ <span class="hljs-string">"file.txt.a"</span> =~ .*\.txt$ ]]   <span class="hljs-comment"># False</span>
+[[ <span class="hljs-string">"file.txt"</span> =~ .*\.txt$ ]]     <span class="hljs-comment"># True</span>
+</div></code></pre>
+<h3 id="47-%D1%87%D0%B8%D1%81%D0%BB%D0%B0">4.7. Числа!</h3>
+<p>Итак, наконец мы получили достаточно знаний чтобы написать регулярное выражение для целого числа:</p>
+<pre class="hljs"><code><div>^<span class="hljs-literal">[-+]</span>?<span class="hljs-literal">[<span class="hljs-number">0</span>-<span class="hljs-number">9</span>]</span>+$
+</div></code></pre>
+<p>Разберем каждый символ:</p>
+<ul>
+<li><code>^</code> - начало строки, т.е. мы отбрасываем &quot;ab566&quot; значения</li>
+<li><code>$</code> - конец строки, т.е. мы отбрасываем &quot;1223ab&quot; значения</li>
+<li><code>[-+]</code> - любой символ, + или -</li>
+<li><code>[-+]?</code> - обозначет, что &quot;+&quot; или &quot;-&quot; необязательны, но они могут быть в строке, обозначающей число</li>
+<li><code>[0-9]</code> - любая цифра</li>
+<li><code>[0-9]+</code> - цифра должна быть хотя бы одна</li>
+</ul>
+<p>Можно попробовать сделать регулярное выражение для дробного числа:</p>
+<pre class="hljs"><code><div>^<span class="hljs-literal">[+-]</span>?<span class="hljs-literal">[<span class="hljs-number">0</span>-<span class="hljs-number">9</span>]</span>+(\.<span class="hljs-literal">[<span class="hljs-number">0</span>-<span class="hljs-number">9</span>]</span>+)?$
+</div></code></pre>
+<p>Подробнее:</p>
+<ul>
+<li><code>[+-]?[0-9]+</code> - проверка на подстроку-число из предыдущего примера. Обратите внимание, что якоря &quot;переехали&quot;, т.к. начало и конец строки теперь в других местах.</li>
+<li><code>\.</code> - точка как символ точки</li>
+<li><code>\.[0-9]+</code> - дробная часть числа</li>
+<li><code>(\.[0-9]+)?</code> - дробная часть числа необязательная</li>
+</ul>
+<p>Автор настоятельно рекомендует самостоятельно попробовать написать регулярные выражения для даты, чтобы закрепить материал.</p>
+<h3 id="48-%D1%81-%D1%87%D0%B5%D0%BC-%D1%80%D0%B5%D0%B3%D1%83%D0%BB%D1%8F%D1%80%D0%BD%D1%8B%D0%B5-%D0%B2%D1%8B%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D1%8F-%D0%BF%D1%83%D1%82%D0%B0%D1%82%D1%8C-%D0%BD%D0%B5%D0%BB%D1%8C%D0%B7%D1%8F-%D0%B8%D0%BB%D0%B8-%D0%BC%D0%B0%D1%81%D0%BA%D0%B8-%D1%84%D0%B0%D0%B9%D0%BB%D0%BE%D0%B2">4.8. С чем регулярные выражения путать нельзя или маски файлов</h3>
+<p>Маски файлов похожи на регулярные выражения, но ими не являются. У масок значительно более простой синтаксис, т.к. они предназначены исключительно для поиска файлов.
+Они имеют очень простой синтаксис:</p>
+<ul>
+<li><code>*</code> - любая последовательность символов, включая пустую &quot;&quot;</li>
+<li><code>?</code> - любой символ</li>
+</ul>
+<p>Например, под маску <code>?a*</code> подходят имена файлов:</p>
+<pre class="hljs"><code><div>2a
+bash.md
+ca.txt
+</div></code></pre>
+<h2 id="%D0%B3%D0%BB%D0%B0%D0%B2%D0%B0-v-%D0%BC%D0%B0%D0%B3%D0%B8%D1%8F-%D0%BC%D0%B0%D1%82%D0%B5%D0%BC%D0%B0%D1%82%D0%B8%D0%BA%D0%B8">Глава V. Магия математики</h2>
+<p>Только теперь можно приступить к математическим операциям.
+Числа желательно проверять регулярным выражением, т.к. всё в bash-у является строкой и нет отдельного типа данных для чисел.</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">read</span> a b
+re_num=^[-+]?[0-9]+$
+<span class="hljs-keyword">if</span> ! ([[ <span class="hljs-variable">$a</span> =~ re_num ]] &amp;&amp; [[ <span class="hljs-variable">$b</span> =~ re_num ]]); <span class="hljs-keyword">then</span>
+    <span class="hljs-built_in">echo</span> ERROR
+<span class="hljs-keyword">else</span>
+    ...
+<span class="hljs-keyword">fi</span>
+</div></code></pre>
+<h3 id="51-%D1%88%D0%BA%D0%BE%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F-%D0%B0%D1%80%D0%B8%D1%84%D0%BC%D0%B5%D1%82%D0%B8%D0%BA%D0%B0">5.1. Школьная арифметика</h3>
+<blockquote>
+<p>Bash не поддерживает арифметические операции с дробными числами.</p>
+</blockquote>
+<p>Совсем. И незачем. Bash-у не нужно что-то считать, с этой задачей справится любой классический полноценный язык программирования.
+Поэтому берём только целые числа.</p>
+<p>Для произведения <strong>любых математических</strong> операций, используются двойные круглые скобки: <code>(( ))</code>:</p>
+<pre class="hljs"><code><div>a=2
+(( b = a * a ))
+<span class="hljs-built_in">echo</span> <span class="hljs-variable">$b</span>   <span class="hljs-comment"># 4</span>
+
+(( b++ ))
+<span class="hljs-built_in">echo</span> <span class="hljs-variable">$b</span>   <span class="hljs-comment"># 5</span>
+
+(( b *= -1 ))
+<span class="hljs-built_in">echo</span> <span class="hljs-variable">$b</span>   <span class="hljs-comment"># -5</span>
+</div></code></pre>
+<p>Как Вы можете заметить, <strong>внутри</strong> скобок $ не обязателен. Однако его нужно использовать для особых переменных, например, для позиционных:</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># test.sh 5 2</span>
+(( res = <span class="hljs-variable">$1</span> + <span class="hljs-variable">$2</span> ))
+<span class="hljs-built_in">echo</span> <span class="hljs-variable">$res</span>   <span class="hljs-comment"># 7</span>
+</div></code></pre>
+<p>Какие операции поддерживаются?</p>
+<ul>
+<li><code>+</code>, <code>-</code>, <code>*</code>, <code>/</code> (целочисленное), <code>%</code>, <code>**</code></li>
+<li><code>+=</code>, <code>-=</code>, <code>*=</code> и т.п.</li>
+<li><code>++</code> и <code>--</code></li>
+</ul>
+<h3 id="52-%D0%B2%D0%BE%D0%B7%D0%B2%D1%80%D0%B0%D1%82-%D1%80%D0%B5%D0%B7%D1%83%D0%BB%D1%8C%D1%82%D0%B0%D1%82%D0%B0-%D0%B2%D1%8B%D1%87%D0%B8%D1%81%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F">5.2. Возврат результата вычисления</h3>
+<p>Запустив скрипт</p>
+<pre class="hljs"><code><div>b=2
+<span class="hljs-built_in">echo</span> (( b * 2 ))   <span class="hljs-comment"># bash: syntax error</span>
+</div></code></pre>
+<p>Вы получите ошибку, т.к. <code>(( ))</code> ничего не возвращают.</p>
+<p>Чтобы вычислить результат и сразу вернуть его, используется, как можно догадаться, знак доллара перед (так же, как и чтение переменной):</p>
+<pre class="hljs"><code><div>b=2
+<span class="hljs-built_in">echo</span> $(( b * 2 ))   <span class="hljs-comment"># 4</span>
+</div></code></pre>
+<p>Злоупотреблять этим символом тоже не стоит:</p>
+<pre class="hljs"><code><div>i=0
+$(( i += 1 ))      <span class="hljs-comment"># bash: 1: command not found...</span>
+</div></code></pre>
+<p>Как в случае с чтением переменных, интепретатор подставляет на место доллара результат вычисления:</p>
+<pre class="hljs"><code><div>  $(( i += 1 ))
+<span class="hljs-comment">#      |</span>
+<span class="hljs-comment">#    i -&gt; 0</span>
+<span class="hljs-comment">#      |</span>
+  $(( 0 + 1 ))
+<span class="hljs-comment">#      |</span>
+<span class="hljs-comment">#  0 + 1 = 1</span>
+<span class="hljs-comment">#      |</span>
+   $(( 1 ))
+<span class="hljs-comment">#      |</span>
+<span class="hljs-comment"># $(( 1 )) -&gt; 1</span>
+<span class="hljs-comment">#      |</span>
+<span class="hljs-comment">#      V</span>
+
+1   <span class="hljs-comment"># bash: 1: command not found...</span>
+</div></code></pre>
+<h3 id="53-%D0%BA%D0%BE%D0%BD%D0%BA%D0%B0%D1%82%D0%B5%D0%BD%D0%B0%D1%86%D0%B8%D1%8F---%D0%BD%D0%B5-%D1%81%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5">5.3. Конкатенация - не сложение!</h3>
+<p>Для сложения строк и чисел во многих ЯП используется символ <code>+</code>:</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># Python3</span>
+a = <span class="hljs-string">"foo"</span>
+b = <span class="hljs-string">"bar"</span>
+c = a + b
+print(c)  <span class="hljs-comment"># foobar</span>
+</div></code></pre>
+<p>Но не в bash. Любая попытка подставить <em>не число</em> в математические скобки не увенчается успехом.</p>
+<pre class="hljs"><code><div>a=foo
+b=bar
+<span class="hljs-built_in">echo</span> $((a + b))  <span class="hljs-comment"># 0</span>
+</div></code></pre>
+<p>Правильная запись &quot;сложения&quot; (конкатенации) строк:</p>
+<pre class="hljs"><code><div>a=foo
+b=bar
+<span class="hljs-built_in">echo</span> <span class="hljs-variable">${foo}</span><span class="hljs-variable">${bar}</span>   <span class="hljs-comment"># foobar</span>
+</div></code></pre>
+<h3 id="54-%D0%BC%D0%B0%D1%82%D0%B5%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5-%D1%83%D1%81%D0%BB%D0%BE%D0%B2%D0%B8%D1%8F">5.4. Математические условия</h3>
+<p>При помощи <code>(( ))</code> можно записывать условия, использующие математические операции:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">if</span> (( a % 2 == 0)); <span class="hljs-keyword">then</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-variable">$a</span> - odd
+<span class="hljs-keyword">else</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-variable">$a</span> - even
+<span class="hljs-keyword">fi</span>
+</div></code></pre>
+<h2 id="%D0%B3%D0%BB%D0%B0%D0%B2%D0%B0-vi-%D0%B2%D0%BE%D1%82-%D0%BE%D0%BD%D0%B8-%D1%81%D0%BB%D0%B5%D0%B2%D0%B0-%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BE-while-until-for">Глава VI. Вот они, слева направо: <code>while</code>, <code>until</code>, <code>for</code></h2>
+<h3 id="61-while-%D0%B8-until">6.1. <code>while</code> и <code>until</code></h3>
+<p><code>while</code> - самый обычный, но не всегда самый удобный способ задать цикл:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">while</span> [ <span class="hljs-variable">$condition</span> ]; <span class="hljs-keyword">do</span>
+    ...
+<span class="hljs-keyword">done</span>
+</div></code></pre>
+<p>В качестве <code>condition</code> может выступать любое выражение - как в ветвлениях:</p>
+<pre class="hljs"><code><div>i=0
+<span class="hljs-keyword">while</span> [[ <span class="hljs-variable">$i</span> &lt; 5 ]]; <span class="hljs-keyword">do</span>
+    <span class="hljs-built_in">echo</span> -n <span class="hljs-string">"<span class="hljs-variable">$i</span> "</span>
+    (( i++ ))
+<span class="hljs-keyword">done</span>
+<span class="hljs-comment"># 0 1 2 3 4  </span>
+</div></code></pre>
+<p>Редко, но используется другая форма записи - через <code>until</code>:</p>
+<pre class="hljs"><code><div>i=0
+until [[ <span class="hljs-variable">$i</span> &gt;= 5 ]]; <span class="hljs-keyword">do</span>
+    <span class="hljs-built_in">echo</span> -n <span class="hljs-string">"<span class="hljs-variable">$i</span> "</span>
+    (( i++ ))
+<span class="hljs-keyword">done</span>
+<span class="hljs-comment"># 0 1 2 3 4</span>
+</div></code></pre>
+<p>В чём отличие? Цикл <code>while</code> работает, пока значение <em>истинно</em>, в то время как <code>until</code> работает, пока значение <em>ложно</em>.</p>
+<p>Конечно, можно не морочить голову и везде писать <code>while</code>... Однако если есть такая возможность в языке, то почему бы не использовать?
+План такой:</p>
+<ul>
+<li>Записывате условие для <code>while</code></li>
+<li>Если в условии есть отрицание всего выражение, например:</li>
+</ul>
+<pre class="hljs"><code><div>! ([[ <span class="hljs-variable">$a</span> ]] &amp;&amp; [[ <span class="hljs-variable">$b</span> ]])
+</div></code></pre>
+<p>в таком случае проверяете, возможно ли избавиться от символа, уменьшив количество операторов. Если же нет, то записываете цикл через <code>until</code>. Напиример:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">while</span> !([[ <span class="hljs-variable">$a</span> ]] &amp;&amp; [[ <span class="hljs-variable">$b</span> ]]); <span class="hljs-keyword">do</span>
+    ...
+<span class="hljs-keyword">done</span>
+</div></code></pre>
+<p>можно трансформировать в</p>
+<pre class="hljs"><code><div>until [[ <span class="hljs-variable">$a</span> ]] &amp;&amp; [[ <span class="hljs-variable">$b</span> ]]; <span class="hljs-keyword">do</span>
+    ...
+<span class="hljs-keyword">done</span>
+</div></code></pre>
+<p>И такая запись будет короче и приятнее глазу.</p>
+<h3 id="62-%D0%B2%D1%81%D0%B5%D0%BC%D0%BE%D0%B3%D1%83%D1%89%D0%B8%D0%B9-for">6.2. Всемогущий <code>for</code></h3>
+<h4 id="621-%D0%B4%D0%BB%D1%8F-%D0%BC%D0%B0%D1%81%D1%81%D0%B8%D0%B2%D0%BE%D0%B2">6.2.1. Для массивов</h4>
+<p>Самый типичный пример использования <code>for</code> - перебор значений в массиве:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">for</span> it <span class="hljs-keyword">in</span> array; <span class="hljs-keyword">do</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-variable">$it</span>
+<span class="hljs-keyword">done</span>
+</div></code></pre>
+<p>Например:</p>
+<pre class="hljs"><code><div>OLD_IFS=<span class="hljs-variable">$IFS</span>
+IFS=<span class="hljs-string">" "</span>
+
+line=<span class="hljs-string">"i love bash scripts"</span>
+
+<span class="hljs-keyword">for</span> word <span class="hljs-keyword">in</span> <span class="hljs-variable">$line</span>; <span class="hljs-keyword">do</span>
+    <span class="hljs-built_in">echo</span> word
+<span class="hljs-keyword">done</span>
+
+IFS=<span class="hljs-variable">$OLD_IFS</span>
+
+<span class="hljs-comment"># i</span>
+<span class="hljs-comment"># love</span>
+<span class="hljs-comment"># bash</span>
+<span class="hljs-comment"># scripts</span>
+</div></code></pre>
+<p>К массивам вернёмся в 7 главе.</p>
+<p>Но у <code>for</code> есть ещё несколько удобных конструкций, которые и делают его основным способом задания цикла.</p>
+<h4 id="622-%D0%B4%D0%BB%D1%8F-%D0%BF%D1%80%D0%BE%D1%81%D1%82%D1%8B%D1%85-%D0%BF%D0%BE%D1%81%D0%BB%D0%B5%D0%B4%D0%BE%D0%B2%D0%B0%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%D1%81%D1%82%D0%B5%D0%B9">6.2.2. Для простых последовательностей</h4>
+<p>Очень просто записывается <code>for</code> для последовательностей:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> $(seq 1 3); <span class="hljs-keyword">do</span>
+    <span class="hljs-built_in">echo</span> -n <span class="hljs-string">"<span class="hljs-variable">$i</span> "</span>
+<span class="hljs-keyword">done</span>
+<span class="hljs-comment"># 1 2 3</span>
+</div></code></pre>
+<blockquote>
+<p>Обратите внимание: границы включены в последовательность!</p>
+</blockquote>
+<h4 id="623-c%D0%B8-%D1%81%D1%82%D0%B0%D0%B9%D0%BB">6.2.3. Cи-стайл</h4>
+<p>Если же Вам нужно записать сложный цикл, как в С-подобных языках программирования, то Вам на помощь придут математические скобки:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">for</span> (( i=4; i&gt;=0; i-- )); <span class="hljs-keyword">do</span>
+    <span class="hljs-built_in">echo</span> -n <span class="hljs-string">"<span class="hljs-variable">$i</span> "</span>
+<span class="hljs-keyword">done</span>
+<span class="hljs-comment"># 4 3 2 1 0</span>
+</div></code></pre>
+<p>Но не стоит злоупотреблять такой возможностью. Если будет что-то такое:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">for</span> (( i=0; i&lt;5; i++ )); <span class="hljs-keyword">do</span>
+    ...
+<span class="hljs-keyword">done</span>
+</div></code></pre>
+<p>можно заменить на более простую запись через <code>seq</code>:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> $(seq 0 4); <span class="hljs-keyword">do</span>
+    ...
+<span class="hljs-keyword">done</span>
+</div></code></pre>
+<p>Ещё раз обратим внимание: <strong>в <code>seq</code> обе границы последовательности включительно!</strong></p>
+<h3 id="63-%D0%BE%D0%B1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%B0-%D0%BF%D0%BE%D0%B7%D0%B8%D1%86%D0%B8%D0%BE%D0%BD%D0%BD%D1%8B%D1%85-%D0%BF%D0%B0%D1%80%D0%B0%D0%BC%D0%B5%D1%82%D1%80%D0%BE%D0%B2">6.3. Обработка позиционных параметров</h3>
+<p>Ранее мы разобрали, что такое позиционные параметры и команду <code>shift</code>. Пора применить их вместе:</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># test.sh foo bar "hello world"</span>
+
+<span class="hljs-keyword">while</span> [ <span class="hljs-variable">$1</span> ]; <span class="hljs-keyword">do</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-variable">$1</span>
+    <span class="hljs-built_in">shift</span>
+<span class="hljs-keyword">done</span>
+
+<span class="hljs-comment"># foo</span>
+<span class="hljs-comment"># bar</span>
+<span class="hljs-comment"># hello world</span>
+</div></code></pre>
+<p>Скрипт выводит построчно аргументы при запуске скрипта (за исключением нулевого). Вот так это работает:</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># /pathtoyourscript/test.sh foo bar hello world</span>
+<span class="hljs-comment">#               ^            ^   ^       ^</span>
+<span class="hljs-comment">#               $0           $1  $2      $3</span>
+
+<span class="hljs-built_in">echo</span> <span class="hljs-variable">$1</span>     <span class="hljs-comment"># foo</span>
+
+<span class="hljs-built_in">shift</span>       <span class="hljs-comment"># -----&gt;</span>
+<span class="hljs-comment"># /pathtoyourscript/test.sh foo bar hello world</span>
+<span class="hljs-comment">#               ^                ^       ^</span>
+<span class="hljs-comment">#               $0               $1      $2</span>
+
+<span class="hljs-built_in">echo</span> <span class="hljs-variable">$1</span>     <span class="hljs-comment"># bar</span>
+
+<span class="hljs-built_in">shift</span>       <span class="hljs-comment"># -----&gt;</span>
+<span class="hljs-comment"># /pathtoyourscript/test.sh foo bar hello world</span>
+<span class="hljs-comment">#               ^                        ^</span>
+<span class="hljs-comment">#               $0                       $1</span>
+
+<span class="hljs-built_in">echo</span> <span class="hljs-variable">$1</span>     <span class="hljs-comment"># hello world</span>
+
+<span class="hljs-built_in">shift</span>       <span class="hljs-comment"># -----&gt;</span>
+<span class="hljs-comment"># /pathtoyourscript/test.sh foo bar hello world</span>
+<span class="hljs-comment">#               ^</span>
+<span class="hljs-comment">#               $0</span>
+</div></code></pre>
+
+</body>
+</html>
